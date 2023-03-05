@@ -1,0 +1,5 @@
+Django==2.2.16
+django-filter==21.1
+python-dotenv==0.21.1
+pytz==2022.7.1
+sqlparse==0.4.3
