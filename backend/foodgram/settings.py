@@ -6,8 +6,10 @@ load_dotenv()
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 SECRET_KEY = (
-    os.getenv('SECRET_KEY'),
-    't6&a=bbdcmpl8v)rq3)9fo7$9x2*n+qg9@)+l7lj&%5l*zz*%d',
+    os.getenv(
+        'SECRET_KEY',
+        default='t6&a=bbdcmpl8v)rq3)9fo7$9x2*n+qg9@)+l7lj&%5l*zz*%d'
+    )
 )
 
 
@@ -15,6 +17,7 @@ DEBUG = os.getenv('DEBUG', default='False') == 'True'
 
 ALLOWED_HOSTS = []
 
+AUTH_USER_MODEL = 'users.User'
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -23,6 +26,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'users',
 ]
 
 MIDDLEWARE = [
