@@ -1,12 +1,16 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
-from django.db.models import F, Q
 
 
 class User(AbstractUser):
+    """Модель таблицы пользователей.
+    Attributes:
+        email: EmailField - переопределяем поле, выставляем
+        ограничение символов согласно тз
+        first_name: CharField - переопределяем поле, выставляем
+        ограничение символов согласно тз
     """
-    Абстрактная модель.
-    """
+
     email = models.EmailField(
         max_length=254,
         unique=True,
@@ -14,7 +18,7 @@ class User(AbstractUser):
     )
     first_name = models.CharField(
         max_length=150,
-        verbose_name="Имя пользователя"
+        verbose_name="Имя"
     )
 
     USERNAME_FIELD = 'email'
