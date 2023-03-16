@@ -22,6 +22,7 @@ class UserAdmin(admin.ModelAdmin):
         'last_name',
         'date_joined',
         'is_active',
+        'password',
     )
     search_fields = (
         'email',
@@ -41,6 +42,7 @@ class UserAdmin(admin.ModelAdmin):
         'first_name',
         'last_name',
         'is_active',
+        'password',
     )
     empty_value_display = '-пусто-'
 
