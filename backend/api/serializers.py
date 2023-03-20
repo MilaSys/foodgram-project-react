@@ -1,13 +1,30 @@
+import base64
+
+from django.core.files.base import ContentFile
 import django.contrib.auth.password_validation as validate
 from django.contrib.auth import authenticate
 from djoser.serializers import UserCreateSerializer
-from rest_framework.relations import PrimaryKeyRelatedField, SlugRelatedField
 from rest_framework import serializers
+from rest_framework.relations import PrimaryKeyRelatedField, SlugRelatedField
 from rest_framework.validators import UniqueTogetherValidator
 
-
-from users.models import Subscription
+from recipes.models import (
+    FavoriteRecipe, Ingredient, IngredientAmount, Recipe, ShoppingCart, Tag
+)
 from users.admin import User
+from users.models import Subscription
+
+
+class Base64ImageField(serializers.ImageField):
+    """Кодирование/декодирование изображения в/из формата Base64."""
+
+    def to_internal_value(self, data):
+        if isinstance(data, str) and data.startswith('data:image'):
+            format, imgstr = data.split(';base64,')
+            ext = format.split('/')[-1]
+            data = ContentFile(base64.b64decode(imgstr), name='temp.' + ext)
+
+        return super().to_internal_value(data)
 
 
 class CustomUserRegSerializer(UserCreateSerializer):
@@ -96,7 +113,7 @@ class SubscribeMixin:
 
 
 class SubscribeSerializer(serializers.ModelSerializer):
-    """Сериализация модели с подписками."""
+    """Подписка."""
 
     class Meta:
         model = Subscription
@@ -122,6 +139,7 @@ class CustomUserSerializer(
         SubscribeMixin,
         serializers.ModelSerializer
     ):
+    """Пользователи."""
     is_subscribed = serializers.BooleanField(read_only=True)
 
     class Meta:
@@ -134,3 +152,19 @@ class CustomUserSerializer(
             'last_name',
             'is_subscribed'
         )
+
+
+class TagSerializer(serializers.ModelSerializer):
+    """Тэг."""
+
+    class Meta:
+        model = Tag
+        fields = '__all__'
+
+
+class IngredientSerializer(serializers.ModelSerializer):
+    """Ингредиент."""
+
+    class Meta:
+        model = Ingredient
+        fields = '__all__'
