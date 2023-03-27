@@ -70,8 +70,8 @@ class Ingredient(models.Model):
         max_length=MAX_LENGTH,
         db_index=True,
         help_text=(
-        'Введите название ингредиента.'
-        f'{MSG_LETTERS_RU}'
+            'Введите название ингредиента.'
+            f'{MSG_LETTERS_RU}'
         ),
     )
     measurement_unit = models.CharField(

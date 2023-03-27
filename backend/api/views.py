@@ -1,8 +1,6 @@
 from django.db.models import F, Sum
-from django.db.models.expressions import Exists, OuterRef, Value
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
-from django.utils.translation import gettext_lazy as _
 from django_filters import rest_framework
 
 from djoser.views import UserViewSet
@@ -194,7 +192,7 @@ class FavoriteView(views.APIView):
 
     def post(self, request, pk=None):
         user = request.user
-        data = {'user': user.id, 'recipe': pk,}
+        data = {'user': user.id, 'recipe': pk, }
         context = {'request': request}
         serializer = FavoriteSerializer(data=data, context=context)
         if not serializer.is_valid():
@@ -234,7 +232,7 @@ class ShoppingCartView(views.APIView):
     def post(self, request, pk=None):
 
         user = request.user
-        data = {'user': user.id, 'recipe': pk,}
+        data = {'user': user.id, 'recipe': pk, }
         context = {'request': request}
         serializer = ShoppingCartSerializer(data=data, context=context)
         if not serializer.is_valid():

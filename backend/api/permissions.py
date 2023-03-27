@@ -6,7 +6,7 @@ class IsAuthorOrAdminOrReadOnly(permissions.BasePermission):
 
     message = (
         'Вы не являетесь автором поста или администратором! Доступ запрещен!'
-        )
+    )
 
     def has_permission(self, request, view):
         return (
