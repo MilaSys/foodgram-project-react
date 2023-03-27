@@ -133,3 +133,5 @@ dmypy.json
 .idea
 
 static/
+media/
+requests.http

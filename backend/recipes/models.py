@@ -1,8 +1,7 @@
-from decimal import Decimal
+from django.core.validators import MinValueValidator
+from django.db import models
 
 from colorfield.fields import ColorField
-from django.core.validators import MaxValueValidator, MinValueValidator
-from django.db import models
 from pytils.translit import slugify
 
 from recipes.constants import MAX_LENGTH
@@ -11,7 +10,8 @@ from users.models import User
 
 
 class Tag(models.Model):
-    """Модель таблицы тэга.
+    """
+    Модель таблицы тэга.
     Attributes:
         name: CharField - название тэга
         color: ColorField - цвет тега, в формате HEX
@@ -58,7 +58,8 @@ class Tag(models.Model):
 
 
 class Ingredient(models.Model):
-    """Модель таблицы ингредиента.
+    """
+    Модель таблицы ингредиента.
     Attributes:
         name: CharField - название ингредиента
         measurement_unit: CharField - единица измерения ингредиента
@@ -92,7 +93,8 @@ class Ingredient(models.Model):
 
 
 class Recipe(models.Model):
-    """Модель таблицы рецепта.
+    """
+    Модель таблицы рецепта.
     Attributes:
         author : ForeignKey - ссылка (ID) на объект класса User
         name: CharField - название рецепта
@@ -137,14 +139,15 @@ class Recipe(models.Model):
     )
     ingredients = models.ManyToManyField(
         Ingredient,
-        through='IngredientAmount',
-        related_name='recipes',
         verbose_name='Ингредиенты',
+        through='IngredientAmount',
+        related_name='ingredients',
         help_text='Введите id ингредиентов, для приготовления блюда',
     )
     tags = models.ManyToManyField(
         Tag,
         verbose_name='Тег',
+        related_name='recipes',
         help_text='Введите id ассоциирующегося тега.',
     )
     cooking_time = models.PositiveSmallIntegerField(
@@ -155,7 +158,7 @@ class Recipe(models.Model):
             ),
         ],
         default=1,
-        help_text='Введите время необходимое для приготовления.',
+        help_text='Введите время необходимое для приготовления в минутах.',
     )
     pub_date = models.DateTimeField(
         verbose_name='Дата создания рецепта',
@@ -172,7 +175,8 @@ class Recipe(models.Model):
 
 
 class IngredientAmount(models.Model):
-    """Модель таблицы количества ингредиента.
+    """
+    Модель таблицы количества ингредиента.
     Attributes:
         ingredient: ForeignKey - ссылка (ID) на объект класса Ingredient
         recipe: ForeignKey - ссылка (ID) на объект класса Recipe
@@ -197,26 +201,13 @@ class IngredientAmount(models.Model):
         related_name='amount_ingredient',
         help_text='Введите Id рецепта.',
     )
-    amount = models.DecimalField(
+    amount = models.PositiveSmallIntegerField(
         verbose_name='Количество',
-        max_digits=6,
-        decimal_places=2,
-        default='1',
-        validators=[
+        default=1,
+        validators=(
             MinValueValidator(
-                Decimal('0.01'),
-                'Количество ингредиентов не может быть меньше 0.01!'
-            ),
-            MaxValueValidator(
-                Decimal('9999.99'),
-                'Количество ингредиентов не может быть больше 9999.99!'
-            ),
-        ],
-        help_text=(
-            'Введите необходимое количество ингредиента.'
-            'Разрешается использовать целые и десятичные положительные числа,'
-            'в пределах от 0.01 до 9999.99.'
-        ),
+                1, message='Мин. количество ингридиентов 1'),),
+        help_text='Введите необходимое количество ингредиента.',
     )
 
     class Meta:
@@ -234,7 +225,8 @@ class IngredientAmount(models.Model):
 
 
 class FavoriteRecipe(models.Model):
-    """Модель таблицы избранных рецептов.
+    """
+    Модель таблицы избранных рецептов.
     Attributes:
         user: ForeignKey - ссылка (ID) на объект класса User
         recipe: ForeignKey - ссылка (ID) на объект класса Recipe
@@ -244,13 +236,13 @@ class FavoriteRecipe(models.Model):
         User,
         verbose_name='Пользователь',
         on_delete=models.CASCADE,
-        related_name='favorite_list',
+        related_name='favorites',
     )
     recipe = models.ForeignKey(
         Recipe,
         verbose_name='Избранный рецепт',
         on_delete=models.CASCADE,
-        related_name='ingredient',
+        related_name='favorites',
         help_text='Введите Id любимого рецепта.',
     )
 
@@ -268,7 +260,8 @@ class FavoriteRecipe(models.Model):
 
 
 class ShoppingCart(models.Model):
-    """Модель таблицы корзины покупок.
+    """
+    Модель таблицы корзины покупок.
     Attributes:
         user: ForeignKey - ссылка (ID) на объект класса User
         recipe: ForeignKey - ссылка (ID) на объект класса Recipe
@@ -278,7 +271,7 @@ class ShoppingCart(models.Model):
         User,
         verbose_name='Пользователь',
         on_delete=models.CASCADE,
-        related_name='shopping_list',
+        related_name='shopping_cart',
     )
     recipe = models.ForeignKey(
         Recipe,

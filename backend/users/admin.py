@@ -6,7 +6,8 @@ User = get_user_model()
 
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
-    """Настройки отображения таблицы с пользователями в админ зоне.
+    """
+    Настройки отображения таблицы с пользователями в админ зоне.
     Attributes:
         list_display: - отображаемые поля
         search_fields: - поле для поиска соответствий
@@ -14,6 +15,7 @@ class UserAdmin(admin.ModelAdmin):
         list_editable: - редактируемое поле
         empty_value_display: - заполнитель ячеек со значением None
     """
+
     list_display = (
         'id',
         'username',

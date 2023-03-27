@@ -4,7 +4,8 @@ from django.db.models import F, Q
 
 
 class User(AbstractUser):
-    """Модель таблицы пользователей.
+    """
+    Модель таблицы пользователей.
     Attributes:
         email: EmailField - переопределяем поле, выставляем
         ограничение символов согласно тз
@@ -31,15 +32,17 @@ class User(AbstractUser):
         ordering = ('-id',)
 
     def __str__(self):
-        return self.get_full_name()
+        return self.username
 
 
 class Subscription(models.Model):
-    """Модель таблицы подписчиков.
+    """
+    Модель таблицы подписчиков.
     Attributes:
         user: ForeignKey - ссылка (ID) на объект класса User
         author: ForeignKey - ссылка (ID) на объект класса User
     """
+
     user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,

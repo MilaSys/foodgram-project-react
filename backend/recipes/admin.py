@@ -1,9 +1,7 @@
-
 from django.contrib.admin import ModelAdmin, TabularInline, register
 
-from recipes.models import (
-    FavoriteRecipe, Ingredient, IngredientAmount, Recipe, ShoppingCart, Tag
-)
+from recipes.models import (FavoriteRecipe, Ingredient, IngredientAmount,
+                            Recipe, ShoppingCart, Tag)
 from recipes.strings import EMPTY
 
 
