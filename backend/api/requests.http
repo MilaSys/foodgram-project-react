@@ -24,7 +24,7 @@ Content-Type: application/json
 
 POST http://127.0.0.1:8000/api/auth/token/logout/
 Content-Type: application/json
-Authorization: token 802d6391ee7c0e08a4f7879cccd3d3859ad8f8b5
+Authorization: token 74f7a245d992e2b495287105c3785cd56a4d8af2
 
 
 ###
