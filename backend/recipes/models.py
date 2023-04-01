@@ -1,9 +1,7 @@
+from colorfield.fields import ColorField
 from django.core.validators import MinValueValidator
 from django.db import models
-
-from colorfield.fields import ColorField
 from pytils.translit import slugify
-
 from recipes.constants import MAX_LENGTH
 from recipes.strings import MSG_LETTERS_RU, MSG_LETTERS_US, MSG_NUM
 from users.models import User
@@ -157,7 +155,6 @@ class Recipe(models.Model):
                 1, 'Время приготовления не может быть меньше 1 минуты!'
             ),
         ],
-        default=1,
         help_text='Введите время необходимое для приготовления в минутах.',
     )
     pub_date = models.DateTimeField(

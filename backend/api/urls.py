@@ -1,9 +1,8 @@
 from django.urls import include, path
-
 from rest_framework.routers import DefaultRouter
 
-from .views import (CustomAuthToken, DownloadShoppingCartView, FavoriteView,
-                    IngredientViewSet, Logout, RecipesViewSet,
+from .views import (DownloadShoppingCartView, FavoriteView,
+                    IngredientViewSet, RecipesViewSet,
                     ShoppingCartView, TagViewSet, UsersViewSet)
 
 app_name = 'api'
@@ -29,16 +28,6 @@ urlpatterns = [
         'recipes/download_shopping_cart/',
         DownloadShoppingCartView.as_view(),
         name='download_shopping_cart',
-    ),
-    path(
-        'auth/token/login/',
-        CustomAuthToken.as_view(),
-        name='login',
-    ),
-    path(
-        'auth/token/logout/',
-        Logout.as_view(),
-        name='logout',
     ),
     path(
         '',

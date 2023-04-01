@@ -1,6 +1,5 @@
-import django_filters
 from django.db import models
-from django_filters import rest_framework
+from django_filters import CharFilter, rest_framework
 
 from recipes.models import Ingredient, Recipe
 
@@ -8,7 +7,7 @@ from recipes.models import Ingredient, Recipe
 class IngredientFilter(rest_framework.FilterSet):
     """Фильтр ингредиентов."""
 
-    name = django_filters.CharFilter(method='filtering_by_name')
+    name = CharFilter(method='filtering_by_name')
 
     def filtering_by_name(self, queryset, name, value):
         if not value:
