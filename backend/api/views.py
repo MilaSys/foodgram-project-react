@@ -4,12 +4,9 @@ from django.shortcuts import get_object_or_404
 from django_filters import rest_framework
 from djoser.views import UserViewSet
 from rest_framework import status, views, viewsets
-from rest_framework.authtoken.models import Token
-from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.decorators import action
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
-from rest_framework.views import APIView
 
 from users.models import Subscription, User
 from recipes.models import (FavoriteRecipe, Ingredient, IngredientAmount,
@@ -41,7 +38,7 @@ class UsersViewSet(UserViewSet):
 
     queryset = User.objects.all()
     serializer_class = CustomUserSerializer
-    permission_classes = (IsAuthorOrAdminOrReadOnly,)
+    permission_classes = (AllowAny,)
     pagination_class = LimitPagination
     http_method_names = ['get', 'post', 'delete', 'head']
 
@@ -51,7 +48,11 @@ class UsersViewSet(UserViewSet):
 
         return super().get_permissions()
 
-    @action(methods=['POST', 'DELETE'], detail=True)
+    @action(
+            methods=['POST', 'DELETE'],
+            detail=True,
+            permission_classes=[IsAuthorOrAdminOrReadOnly]
+        )
     def subscribe(self, request, id):
         user = request.user
         author = get_object_or_404(User, id=id)
@@ -74,7 +75,7 @@ class UsersViewSet(UserViewSet):
         ).delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
-    @action(detail=False, permission_classes=[IsAuthenticated])
+    @action(detail=False, permission_classes=[IsAuthorOrAdminOrReadOnly])
     def subscriptions(self, request):
         user = request.user
         subscribe = User.objects.filter(idol__user=user)
