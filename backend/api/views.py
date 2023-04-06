@@ -8,9 +8,10 @@ from rest_framework.decorators import action
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 
-from users.models import Subscription, User
 from recipes.models import (FavoriteRecipe, Ingredient, IngredientAmount,
                             Recipe, ShoppingCart, Tag)
+from users.models import Subscription, User
+
 from .filters import IngredientFilter, RecipeFilter
 from .paginations import LimitPagination
 from .permissions import IsAuthorOrAdminOrReadOnly

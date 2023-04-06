@@ -2,6 +2,7 @@ from colorfield.fields import ColorField
 from django.core.validators import MinValueValidator
 from django.db import models
 from pytils.translit import slugify
+
 from recipes.constants import MAX_LENGTH
 from recipes.strings import MSG_LETTERS_RU, MSG_LETTERS_US, MSG_NUM
 from users.models import User
