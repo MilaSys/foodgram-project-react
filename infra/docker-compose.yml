@@ -9,20 +9,20 @@ services:
       - ./.env
   
   frontend:
-    # image: milasyschenko/foodgram_frontend:v1
-    build:
-      context: ../frontend
-      dockerfile: Dockerfile
+    image: milasyschenko/foodgram_frontend:v1
+    # build:
+    #   context: ../frontend
+    #   dockerfile: Dockerfile
     volumes:
       - ./frontend/:/app/result_build/
     depends_on:
       - db
   
   backend:
-    # image: milasyschenko/foodgram_backend:v1
-    build:
-      context: ../backend
-      dockerfile: Dockerfile
+    image: milasyschenko/foodgram_backend:v1
+    # build:
+    #   context: ../backend
+    #   dockerfile: Dockerfile
     restart: always
     volumes:
       - static_value:/app/static/

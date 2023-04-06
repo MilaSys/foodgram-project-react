@@ -17,7 +17,8 @@ from .permissions import IsAuthorOrAdminOrReadOnly
 from .serializers import (CustomUserSerializer, FavoriteSerializer,
                           IngredientSerializer, RecipeCreateSerializer,
                           RecipeReadSerializer, ShoppingCartSerializer,
-                          SubscribeCreateSerializer, SubscribeSerializer, TagSerializer)
+                          SubscribeCreateSerializer, SubscribeSerializer,
+                          TagSerializer)
 
 
 class CreateUserView(UserViewSet):
@@ -49,17 +50,17 @@ class UsersViewSet(UserViewSet):
         return super().get_permissions()
 
     @action(
-            methods=['POST', 'DELETE'],
-            detail=True,
-            permission_classes=[IsAuthorOrAdminOrReadOnly]
-        )
+        methods=['POST', 'DELETE'],
+        detail=True,
+        permission_classes=[IsAuthorOrAdminOrReadOnly]
+    )
     def subscribe(self, request, id):
         user = request.user
         author = get_object_or_404(User, id=id)
         data = {
             'user': user.id,
             'author': id,
-            }
+        }
 
         if request.method == 'POST':
             serializer = SubscribeCreateSerializer(
@@ -69,7 +70,7 @@ class UsersViewSet(UserViewSet):
             serializer.save()
 
             return Response(serializer.data, status=status.HTTP_201_CREATED)
-        
+
         get_object_or_404(
             Subscription, user=user, author=author
         ).delete()
@@ -222,12 +223,8 @@ class DownloadShoppingCartView(views.APIView):
     permission_classes = [IsAuthorOrAdminOrReadOnly, ]
 
     def get(self, request):
-        items = IngredientAmount.objects.select_related(
-            'recipe', 'ingredient'
-        )
-        items = items.filter(
-                recipe__shopping_cart__user=request.user
-            )
+        items = IngredientAmount.objects.select_related('recipe', 'ingredient')
+        items = items.filter(recipe__shopping_cart__user=request.user)
 
         items = items.values(
             'ingredient__name', 'ingredient__measurement_unit'

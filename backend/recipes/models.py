@@ -98,11 +98,11 @@ class Recipe(models.Model):
         name: CharField - название рецепта
         image: ImageField - изображение рецепта
         text: CharField - описание рецепта
-        ingredients: ManyToManyField - ссылка на промежуточную модель 
-            ингредиентов
+        ingredients: ManyToManyField - ссылка на
+        промежуточную модель ингредиентов
         tags: ForeignKey - ссылка (ID) на объект класса Tag
-        cooking_time: PositiveSmallIntegerField - время приготовления 
-            (положительное число)
+        cooking_time: PositiveSmallIntegerField - время приготовления
+        (положительное число)
         pub_date: DateTimeField - дата создания
     """
 

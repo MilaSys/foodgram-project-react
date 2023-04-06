@@ -47,7 +47,6 @@ class IsRecipe(metaclass=serializers.SerializerMetaclass):
 
     def get_is_favorited(self, args):
         request = self.context.get('request')
-        
 
         if request.user.is_anonymous:
             return False
@@ -131,7 +130,6 @@ class SubscribeSerializer(CustomUserSerializer, IsRecipeCount):
         return RecipeShortSerializer(queryset, context=context, many=True).data
 
 
-
 class SubscribeCreateSerializer(CustomUserSerializer):
     """Создание подписки"""
     class Meta:
@@ -141,7 +139,7 @@ class SubscribeCreateSerializer(CustomUserSerializer):
             serializers.UniqueTogetherValidator(
                 queryset=model.objects.all(),
                 fields=('user', 'author'),
-                message=f'Вы уже подписаны на Автора.',
+                message='Вы уже подписаны на Автора.',
             )
         ]
 
@@ -385,7 +383,6 @@ class FavoriteSerializer(serializers.ModelSerializer):
         subscription = FavoriteRecipe.objects.create(**validated_data)
 
         return subscription
-
 
 
 class ShoppingCartSerializer(FavoriteSerializer):
