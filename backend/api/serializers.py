@@ -115,8 +115,9 @@ class SubscribeSerializer(CustomUserSerializer, IsRecipeCount):
     recipes_count = serializers.SerializerMethodField(read_only=True)
 
     class Meta(CustomUserSerializer.Meta):
-        fields = CustomUserSerializer.Meta.fields + \
-            ('recipes', 'recipes_count')
+        fields = CustomUserSerializer.Meta.fields + (
+            'recipes', 'recipes_count'
+        )
 
     def get_recipes(self, args):
         request = self.context.get('request')
@@ -156,9 +157,7 @@ class SubscribeCreateSerializer(CustomUserSerializer):
         return data
 
     def create(self, validated_data):
-        subscription = Subscription.objects.create(**validated_data)
-
-        return subscription
+        return Subscription.objects.create(**validated_data)
 
     def to_representation(self, instance):
         return SubscribeSerializer(
@@ -380,9 +379,7 @@ class FavoriteSerializer(serializers.ModelSerializer):
         ]
 
     def create(self, validated_data):
-        subscription = FavoriteRecipe.objects.create(**validated_data)
-
-        return subscription
+        return FavoriteRecipe.objects.create(**validated_data)
 
 
 class ShoppingCartSerializer(FavoriteSerializer):
@@ -400,6 +397,4 @@ class ShoppingCartSerializer(FavoriteSerializer):
         ]
 
     def create(self, validated_data):
-        subscription = ShoppingCart.objects.create(**validated_data)
-
-        return subscription
+        return ShoppingCart.objects.create(**validated_data)
