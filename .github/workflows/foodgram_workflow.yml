@@ -95,9 +95,8 @@ jobs:
         script: |
             sudo docker-compose stop
             sudo docker-compose rm backend:v1 frontend:v1
-            sudo docker pull ${{ secrets.DOCKER_USERNAME }}/frontend:v1 ${{ secrets.DOCKER_USERNAME }}/frontend:v1
-            sudo docker-compose pull backend:v1
-            sudo docker-compose pull frontend:v1
+            sudo docker pull ${{ secrets.DOCKER_USERNAME }}/frontend:v1 
+            sudo docker pull ${{ secrets.DOCKER_USERNAME }}/backend:v1
             touch .env
             echo DB_ENGINE=${{ secrets.DB_ENGINE }} >> .env
             echo DB_NAME=${{ secrets.DB_NAME }} >> .env
