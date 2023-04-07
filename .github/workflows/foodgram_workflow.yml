@@ -96,7 +96,8 @@ jobs:
             sudo docker-compose stop
             sudo docker-compose rm backend:v1 frontend:v1
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/frontend:v1 ${{ secrets.DOCKER_USERNAME }}/frontend:v1
-            sudo docker-compose pull backend:v1 frontend:v1
+            sudo docker-compose pull backend:v1
+            sudo docker-compose pull frontend:v1
             touch .env
             echo DB_ENGINE=${{ secrets.DB_ENGINE }} >> .env
             echo DB_NAME=${{ secrets.DB_NAME }} >> .env
@@ -106,6 +107,7 @@ jobs:
             echo DB_PORT=${{ secrets.DB_PORT }} >> .env
             echo SECRET_KEY="${{ secrets.SECRET_KEY }}" >> .env
             sudo docker-compose up -d
+            sudo docker-compose exec -T backend python manage.py collectstatic --noinput
 
   send_message:
     runs-on: ubuntu-latest
