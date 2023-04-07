@@ -9,7 +9,7 @@ services:
       - ./.env
   
   frontend:
-    image: milasyschenko/foodgram_frontend:v1
+    image: milasyschenko/frontend:v1
     # build:
     #   context: ../frontend
     #   dockerfile: Dockerfile
@@ -19,7 +19,7 @@ services:
       - db
   
   backend:
-    image: milasyschenko/foodgram_backend:v1
+    image: milasyschenko/backend:v1
     # build:
     #   context: ../backend
     #   dockerfile: Dockerfile
