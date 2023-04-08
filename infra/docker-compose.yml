@@ -39,15 +39,14 @@ services:
       - "80:80"
     volumes:
       - ./nginx.conf:/etc/nginx/conf.d/default.conf
-      - ../frontend/build:/usr/share/nginx/html/
-      - ../docs/:/usr/share/nginx/html/api/docs/
+      - ./frontend/build:/usr/share/nginx/html/
+      - ./docs/:/usr/share/nginx/html/api/docs/
       - static_value:/app/html/static/
       - media_value:/var/html/media/
     env_file:
       - ./.env
     depends_on:
       - backend
-      - frontend
 
 volumes:
   db_value:
