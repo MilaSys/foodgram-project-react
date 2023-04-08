@@ -105,9 +105,13 @@ docker-compose exec backend python manage.py createsuperuser
 
 Собрать статику:
 
-docker-compose exec backend python manage.py collectstatic --no-input 
+docker-compose exec backend python manage.py collectstatic --no-input
 
+Заполнить базу данных:
 
+sudo docker-compose exec backend python manage.py load_ingredients
+
+sudo docker-compose exec backend python manage.py load_tags
 
 
 
