@@ -76,7 +76,7 @@ home/<username>/docker-compose.yaml
 и
 home/<username>/default.conf
 соответственно:
-  * перейти в директорию с файлом
+* перейти в директорию с файлом
 docker-compose.yaml
 и выполните:
  
